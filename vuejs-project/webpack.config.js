@@ -1,5 +1,5 @@
 // webpack.config.js
-
+var path = require('path');
 module.exports = {
   // This is the "main" file which should include all other modules
   entry: path.join(__dirname,'/main.js'),
