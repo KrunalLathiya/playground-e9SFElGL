@@ -167,8 +167,7 @@ new Vue({
 });
 ```
 It will output like “Welcome to App Component.” 
-You can run this first part of this project.
-@[Sample Vue.js App]({"stubs": ["webpack.config.js","package.json", "src/App.vue", "index.html", "main.js"], "command": "/bin/bash run.sh"})
+
 # Step 3: Create a Vuex Store.
 Next step will be to create our Vuex store. So in the src directory, create one folder called the store.Vuex store. So in the src directory, create one folder called the store.
 
