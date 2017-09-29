@@ -1,17 +1,15 @@
-<html>
-    <body>
-        <link rel = "stylesheet" href = "style.css"/>
-        <div id = "main">
-            <div id="editable">
-                <input v-model="text1" maxlength="20"> 
-                <p>{{text1}}</p>
-            </div>
-            <div id="reverse">
-                <p>{{ text2 }}</p>
-                <button v-on:click="reverseMessage">Reverse Message</button>
-            </div>
-        </div>
-        <script src = "https://unpkg.com/vue"></script>
-        <script src = "main.js"></script>
-    </body>
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vuex Tutorial Example From Scratch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.css" />
+  </head>
+  <body style="overflow-y: hidden;">
+    <div id="app">
+    </div>
+    <script src="bundle.js"></script>
+  </body>
 </html>

@@ -136,9 +136,38 @@ new Vue({
   el: '#app'
 });
 ```
-
+Here, I have to create vue object and pass it one parameter, which is bound to that DOM element.
+Inside src folder, create one vue component called App.vue.
 Create one folder called src inside root directory. Inside that directory, create one file called main.js
-@[Sample Vue.js App]({"stubs": ["index.html", "main.js"], "command": "/bin/bash run.sh"})
+```javascript
+// App.vue
+
+<template>
+  <div class="container">
+    Welcome to App Component.
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+```
+Include this component in the main.js file.
+```javascript
+// main.js
+
+import Vue from 'vue';
+import App from './App.vue';
+
+new Vue({
+  el: '#app',
+  render: h => h(App)
+});
+```
+
+@[Sample Vue.js App]({"stubs": ["webpack.config.js","package.json", "src/App.vue", index.html", "main.js"], "command": "/bin/bash run.sh"})
 
 Check out the markdown file [`welcome.md`](https://github.com/TechDotIO/vuejs-template/blob/master/markdowns/welcome.md) to see how this exercise is injected into the template.
 

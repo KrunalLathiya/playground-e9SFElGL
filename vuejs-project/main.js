@@ -1,19 +1,9 @@
-new Vue({
-    el: '#editable',
-    data: {
-        text1: 'Edit me!'
-    }
-})
+// main.js
+
+import Vue from 'vue';
+import App from './App.vue';
 
 new Vue({
-    el: '#reverse',
-    data: {
-        text2: 'Tech.io Vue.js Template'
-    },
-    methods: {
-        reverseMessage: function () {
-            this.text2 = this.text2.split('').reverse().join('')
-        }
-    }
-})
-
+  el: '#app',
+  render: h => h(App)
+});

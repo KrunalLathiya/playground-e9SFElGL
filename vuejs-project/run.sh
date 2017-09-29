@@ -1,1 +1,2 @@
-echo "TECHIO> open -s /project/target index.html"
+echo "TECHIO> open -p 3000 /"
+npm start
