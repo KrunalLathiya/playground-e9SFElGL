@@ -166,11 +166,348 @@ new Vue({
   render: h => h(App)
 });
 ```
-
+It will output like “Welcome to App Component.” 
+You can run this first part of this project.
 @[Sample Vue.js App]({"stubs": ["webpack.config.js","package.json", "src/App.vue", "index.html", "main.js"], "command": "/bin/bash run.sh"})
+# Step 3: Create a Vuex Store.
+Next step will be to create our Vuex store. So in the src directory, create one folder called the store.Vuex store. So in the src directory, create one folder called the store.
 
-Check out the markdown file [`welcome.md`](https://github.com/TechDotIO/vuejs-template/blob/master/markdowns/welcome.md) to see how this exercise is injected into the template.
+In that, create one file called store.js. Both folder name and the file name is same.
+```javascript
+// store.js
 
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+    
+});
+```
+Here, I have imported Vuex store and used in Vue library. We just pass this store, while creating vue instance in the main.js file. Vuex store and used in Vue library. We just pass this store, while creating vue instance in the main.js file.
+```javascript
+// main.js
+
+import Vue from 'vue';
+import App from './App.vue';
+import store from './store/store.js'
+
+new Vue({
+  el: '#app',
+  store,
+  render: h => h(App)
+});
+```
+So we have passed our application state to our main vuejs application. Now, we can access its data with the proper methods and proper Vuex flow.
+
+We are building the simple counter application. So first we need to define one state in the store.js file.
+```javascript
+// store.js
+
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  }
+})
+export default store;
+```
+Vuex store is our main application store. It is the single source of truth. All of our application data will be handled by this store. is our main application store. It is the single source of truth. All of our application data will be handled by this store.
+In the store, there is state object, which has one object called count. Our main data is right now count because It will be incremented or decremented in future. So single source of truth is count.
+We have initialized count with 0.
+We are passing the global store into our Vue application instance so that our all child components can access it.
+```javascript
+// main.js
+
+import Vue from 'vue';
+import store from './store/store';
+import App from './App.vue';
+
+const app = new Vue({
+  el: '#app',
+  store,
+  render: h => h(App)
+});
+```
+# Step 4: Make two components: Add and Remove Counter.
+Our primary application is to increment or decrement the count. We need to dispatch two actions.
+1. Increment
+2. Decrement
+We also need to create two vue components inside components folder.
+1. AddCounter.vue
+2. RemoveCounter.vue
+```javascript
+// AddCounter.vue
+
+<template>
+  <div class="container">
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-primary">Add</button>
+      </div>
+  </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    
+  }
+</script>
+```
+Same as RemoveCounter.vue.
+```javascript
+// RemoveCounter.vue
+
+<template>
+  <div class="container">
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-primary">Remove</button>
+      </div>
+  </div>
+  </div>
+</template>
+
+<script>
+import store from '../store/store';
+
+  export default {
+   
+  }
+</script>
+```
+We also need to Display the counter, so what we need is that Counter component called Counter.vue file inside components folder.
+```javascript
+/ Counter.vue
+
+<template>
+  <div class="cotainer">
+    <div class="notification">
+      <h1 class="title" align="center">
+        {{ count }}
+      </h1>
+    </div>
+  </div>
+</template>
+<script>
+
+
+export default {
+ data: {
+   count: 0
+ }
+}
+</script>
+```
+All these components will be included in the App.vue file to display the whole application.
+```javascript
+// App.vue
+
+<template>
+  <div class="container">
+    <Counter></Counter><br />
+    <div class="columns">
+      <div class="column is-11">
+        <AddCounter></AddCounter>
+      </div>
+      <div class="column auto">
+        <RemoveCounter></RemoveCounter>
+      </div>
+    </div>
+ </div>
+</template>
+<script>
+import Counter from './components/Counter.vue';
+import AddCounter from './components/AddCounter.vue';
+import RemoveCounter from './components/RemoveCounter.vue';
+
+  export default {
+    components : {
+      Counter,
+      AddCounter,
+      RemoveCounter
+    }
+  }
+</script>
+```
+# Step 5: Create Mutations and Actions.
+Inside store folder, we are creating one more folder called mutation types and in that create one JavaScript file called types.js. In this file, we are defining our mutation’s type meaning regarding our application is that we need to export two mutation types name. Increment and Decrement.
+```javascript
+// types.js
+
+export const Increment = 'increment';
+export const Decrement = 'decrement';
+```
+Now, If the user clicks the Add button then one action will be triggered, and that action commits the mutation and state changes and according to that UI will change.
+```javascript
+// AddCounter.vue
+
+<template>
+  <div class="container">
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-primary" v-on:click="addCounter()">Add</button>
+      </div>
+  </div>
+  </div>
+</template>
+
+<script>
+import store from '../store/store';
+import * as type from '../store/mutationTypes/types';
+
+  export default {
+    methods: {
+        addCounter(){
+          store.dispatch({
+            type: type.Increment,
+            amount: 20
+          })
+        }
+    }
+  }
+</script>
+```
+Here on button click, and addCounter function will be called, and then that function will dispatch the action type and payload. Switch to the store.js file, We need to add one action, and that action will commit the mutation.
+```javascript
+// AddCounter.vue
+
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+    actions: {
+    increment (context, payload) {
+      context.commit('increment', payload)
+  }
+})
+export default store;
+```
+So, we need to create one mutation called ‘increment.’ Remeber, we can not change the state in action, for that, we have to call mutation function to change the state.
+```javascript
+// AddCounter.vue
+
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state, payload){
+      return state.count = state.count + payload.amount;
+    }
+  },
+  actions: {
+    increment (context, payload) {
+      context.commit('increment', payload)
+  }
+})
+export default store;
+```
+We are calling mutation function with the payload. A payload is the data, which is needed to change the counter. In our application, I have put 20 amount to increment the counter.
+
+Now, we need to update Counter.vue file to show the updated counter.
+```javascript
+// Counter.vue
+
+<template>
+  <div class="cotainer">
+    <div class="notification">
+      <h1 class="title" align="center">
+        {{ count }}
+      </h1>
+    </div>
+  </div>
+</template>
+<script>
+
+import { mapState } from 'vuex';
+
+export default {
+  computed: mapState({
+      count: state => state.count
+})
+</script>
+```
+If you will start the webpack-dev-server by typing npm start command, our server had hosted the index.html file at the port 8080.
+# Step 6: Follow the same step of Increment to Decrement.
+We need to Decrement the counter by following the same step as we have followed in the Increment step.  Go to the RemoveCounter.vue file and write the code that adds remove counter function.
+```javascript
+// RemoveCounter.vue
+
+<template>
+  <div class="container">
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-primary" v-on:click="removeCounter()">Remove</button>
+      </div>
+  </div>
+  </div>
+</template>
+
+<script>
+import store from '../store/store';
+import * as type from '../store/mutationTypes/types';
+
+  export default {
+    methods: {
+        removeCounter(){
+          store.dispatch({
+            type: type.Decrement,
+            amount: 20
+          })
+        }
+    }
+  }
+</script>
+```
+Modify the store.js file and add the decrement action as well as decrement counter mutation.
+I am showing the whole final store.js file.
+```javascript
+// store.js
+
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state, payload){
+      return state.count = state.count + payload.amount;
+    },
+    decrement (state, payload){
+      return state.count = state.count - payload.amount;
+    }
+  },
+    actions: {
+    increment (context, payload) {
+      context.commit('increment', payload)
+    },
+    decrement (context, payload) {
+      context.commit('decrement', payload)
+    }
+  }
+})
+export default store;
+```
+So, at last, the application will look like below. You can increment the counter from one component and decrement counter from another element.
+
+We have used mapState(), a helper, because When our component needs to make use of multiple store state getters then To deal with this, we can make use of the which generatesmapState computed getter functions for us.
 # Template Resources
 
 [`markdowns/welcome.md`](https://github.com/TechDotIO/vuejs-template/blob/master/markdowns/welcome.md)  
