@@ -508,6 +508,8 @@ export default store;
 So, at last, the application will look like below. You can increment the counter from one component and decrement counter from another element.
 
 We have used mapState(), a helper, because When our component needs to make use of multiple store state getters then To deal with this, we can make use of the which generatesmapState computed getter functions for us.
+You can run this first part of this project.
+@[Sample Vue.js App]({"stubs": ["main.js", "src/App.vue","src/components/AddCounter.vue","src/components/Counter.vue","src/components/RemoveCounter.vue","src/store/store.js","src/store/mutationTypes/types.js","index.html"], "command": "/bin/bash run.sh"})
 # Template Resources
 
 [`markdowns/welcome.md`](https://github.com/TechDotIO/vuejs-template/blob/master/markdowns/welcome.md)  
